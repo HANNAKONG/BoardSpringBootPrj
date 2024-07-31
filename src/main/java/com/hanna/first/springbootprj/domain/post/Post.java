@@ -135,7 +135,7 @@ public class Post {
     /**********************************
      *  update method
      **********************************/
-    public void update(String postStatusCode, String title, String content){
+    public void update(PostStatus postStatusCode, String title, String content){
         this.postStatusCode = postStatusCode;
         this.title = title;
         this.content = content;
