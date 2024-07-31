@@ -1,16 +1,37 @@
-package com.hanna.first.springbootprj.web.dto;
+package com.hanna.first.springbootprj.domain.post;
 
 import com.hanna.first.springbootprj.domain.board.Board;
-import com.hanna.first.springbootprj.domain.post.Post;
+import com.hanna.first.springbootprj.domain.board.BoardType;
 
-public class PostRequestDto {
+import javax.persistence.*;
 
+@Entity
+public class Post {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String boardTypeCode;
-    private String postStatusCode;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private BoardType boardTypeCode;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private PostStatus postStatusCode;
+
+    @Column(length = 500, nullable = false)
     private String title;
+
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
+
+    @Column(nullable = false)
     private String authorId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "board_id")
+    private Board board;
 
     /**********************************
      *  getter
@@ -19,11 +40,11 @@ public class PostRequestDto {
         return id;
     }
 
-    public String getBoardTypeCode() {
+    public BoardType getBoardTypeCode() {
         return boardTypeCode;
     }
 
-    public String getPostStatusCode() {
+    public PostStatus getPostStatusCode() {
         return postStatusCode;
     }
 
@@ -39,13 +60,17 @@ public class PostRequestDto {
         return authorId;
     }
 
+    public Board getBoard() {
+        return board;
+    }
+
     /**********************************
      *  builder
      **********************************/
     public static class Builder {
         private Long id;
-        private String boardTypeCode;
-        private String postStatusCode;
+        private BoardType boardTypeCode;
+        private PostStatus postStatusCode;
         private String title;
         private String content;
         private String authorId;
@@ -55,16 +80,15 @@ public class PostRequestDto {
             return this;
         }
 
-        public Builder boardTypeCode(String boardTypeCode) {
+        public Builder boardTypeCode(BoardType boardTypeCode) {
             this.boardTypeCode = boardTypeCode;
             return this;
         }
 
-        public Builder postStatusCode(String postStatusCode) {
+        public Builder postStatusCode(PostStatus postStatusCode) {
             this.postStatusCode = postStatusCode;
             return this;
         }
-
 
         public Builder title(String title) {
             this.title = title;
@@ -81,8 +105,8 @@ public class PostRequestDto {
             return this;
         }
 
-        public PostRequestDto build() {
-            return new PostRequestDto(id, boardTypeCode, postStatusCode, title, content, authorId);
+        public Post build() {
+            return new Post(id, boardTypeCode, postStatusCode, title, content, authorId);
         }
 
     }
@@ -94,7 +118,7 @@ public class PostRequestDto {
     /**********************************
      *  constructor
      **********************************/
-    public PostRequestDto(Long id, String boardTypeCode, String postStatusCode, String title, String content, String authorId) {
+    public Post(Long id, BoardType boardTypeCode, PostStatus postStatusCode, String title, String content, String authorId) {
         this.id = id;
         this.boardTypeCode = boardTypeCode;
         this.postStatusCode = postStatusCode;
@@ -102,18 +126,19 @@ public class PostRequestDto {
         this.content = content;
         this.authorId = authorId;
     }
+    
+    /**********************************
+     *  기본 생성자
+     **********************************/
+    protected Post() {}
 
     /**********************************
-     *  toEntity
+     *  update method
      **********************************/
-    public Post toEntity(){
-        return Post.builder()
-                .boardTypeCode(boardTypeCode)
-                .postStatusCode(postStatusCode)
-                .title(title)
-                .content(content)
-                .authorId(authorId)
-                .build();
+    public void update(String postStatusCode, String title, String content){
+        this.postStatusCode = postStatusCode;
+        this.title = title;
+        this.content = content;
     }
 
 

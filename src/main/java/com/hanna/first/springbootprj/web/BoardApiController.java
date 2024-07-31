@@ -15,7 +15,6 @@ public class BoardApiController {
 
     private final BoardService boardService;
 
-    @Autowired
     public BoardApiController(BoardService boardService) {
         this.boardService = boardService;
     }
@@ -34,20 +33,20 @@ public class BoardApiController {
 
     // 3. 게시글 등록
     @PostMapping("/api/v1/posts")
-    public PostResponseDto savePost(@RequestBody PostRequestDto requestDto){
-        return boardService.savePost(requestDto);
+    public void savePost(@RequestBody PostRequestDto requestDto){
+        boardService.savePost(requestDto);
     }
 
     // 4. 게시글 수정
     @PutMapping("/api/v1/posts/{id}")
-    public PostResponseDto updatePost(@PathVariable Long id, @RequestBody PostRequestDto requestDto){
-        return boardService.updatePost(id, requestDto);
+    public void updatePost(@PathVariable Long id, @RequestBody PostRequestDto requestDto){
+        boardService.updatePost(id, requestDto);
     }
     
     // 5. 게시글 삭제
     @DeleteMapping("/api/v1/posts/{id}")
-    public PostResponseDto deletePost(@PathVariable Long id, @RequestBody PostRequestDto requestDto){
-        return boardService.deletePost(id, requestDto);
+    public void deletePost(@PathVariable Long id, @RequestBody PostRequestDto requestDto){
+        boardService.deletePost(id, requestDto);
     }
 
 
