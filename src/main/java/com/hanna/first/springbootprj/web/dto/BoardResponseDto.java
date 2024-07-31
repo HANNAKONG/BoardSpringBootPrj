@@ -1,12 +1,14 @@
 package com.hanna.first.springbootprj.web.dto;
 
 import com.hanna.first.springbootprj.domain.board.Board;
+import com.hanna.first.springbootprj.domain.board.BoardType;
+import com.hanna.first.springbootprj.domain.post.PostStatus;
 
 public class BoardResponseDto {
 
     private Long id;
-    private String boardTypeCode;
-    private String postStatusCode;
+    private BoardType boardTypeCode;
+    private PostStatus postStatusCode;
     private String title;
     private String authorId;
 

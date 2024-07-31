@@ -1,12 +1,14 @@
 package com.hanna.first.springbootprj.web.dto;
 
 import com.hanna.first.springbootprj.domain.board.Board;
+import com.hanna.first.springbootprj.domain.board.BoardType;
+import com.hanna.first.springbootprj.domain.post.PostStatus;
 
 public class BoardRequestDto {
 
     private Long id;
-    private String boardTypeCode;
-    private String postStatusCode;
+    private BoardType boardTypeCode;
+    private PostStatus postStatusCode;
     private String title;
     private String authorId;
 
@@ -17,11 +19,11 @@ public class BoardRequestDto {
         return id;
     }
 
-    public String getBoardTypeCode() {
+    public BoardType getBoardTypeCode() {
         return boardTypeCode;
     }
 
-    public String getPostStatusCode() {
+    public PostStatus getPostStatusCode() {
         return postStatusCode;
     }
 
@@ -38,8 +40,8 @@ public class BoardRequestDto {
      **********************************/
     public static class Builder {
         private Long id;
-        private String boardTypeCode;
-        private String postStatusCode;
+        private BoardType boardTypeCode;
+        private PostStatus postStatusCode;
         private String title;
         private String authorId;
 
@@ -48,12 +50,12 @@ public class BoardRequestDto {
             return this;
         }
 
-        public Builder boardTypeCode(String boardTypeCode) {
+        public Builder boardTypeCode(BoardType boardTypeCode) {
             this.boardTypeCode = boardTypeCode;
             return this;
         }
 
-        public Builder postStatusCode(String postStatusCode) {
+        public Builder postStatusCode(PostStatus postStatusCode) {
             this.postStatusCode = postStatusCode;
             return this;
         }
@@ -81,7 +83,7 @@ public class BoardRequestDto {
     /**********************************
      *  constructor
      **********************************/
-    public BoardRequestDto(Long id, String boardTypeCode, String postStatusCode, String title, String authorId) {
+    public BoardRequestDto(Long id, BoardType boardTypeCode, PostStatus postStatusCode, String title, String authorId) {
         this.id = id;
         this.boardTypeCode = boardTypeCode;
         this.postStatusCode = postStatusCode;
