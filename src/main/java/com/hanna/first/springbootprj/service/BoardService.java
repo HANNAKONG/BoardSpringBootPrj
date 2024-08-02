@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BoardService {
@@ -35,19 +36,16 @@ public class BoardService {
         //게시글 상태 = 게시인 글만 조회
         BoardRequestDto requestDtoSet = BoardRequestDto.builder()
                 .boardTypeCode(requestDto.getBoardTypeCode())
-                .postStatusCode(PostStatus.PUBLISHED.getCode())
+                .postStatusCode(PostStatus.PUBLISHED)
                 .title(requestDto.getTitle())
                 .authorId(requestDto.getAuthorId())
                 .build();
 
         List<Board> boardList = boardRepository.findAllByBoardTypeCodeAndPostStatusCode(requestDtoSet);
 
-        List<BoardResponseDto> responseList = new ArrayList<>();
-        for (Board entityDto : boardList) {
-            responseList.add(new BoardResponseDto(entityDto));
-        }
-
-        return responseList;
+        return boardList.stream()
+                .map(BoardResponseDto::new)
+                .collect(Collectors.toList());
     }
 
     /**********************************
