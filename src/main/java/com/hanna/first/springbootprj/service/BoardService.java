@@ -16,7 +16,7 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
 
-    public BoardService(BoardRepository boardRepository) {
+    public BoardService(final BoardRepository boardRepository) {
         this.boardRepository = boardRepository;
     }
     
@@ -24,10 +24,10 @@ public class BoardService {
      *  1. 게시글 목록 조회
      **********************************/
     @Transactional(readOnly = true)
-    public List<BoardResponseDto> getBoardList(BoardRequestDto requestDto){
+    public List<BoardResponseDto> getBoardList(final BoardRequestDto requestDto){
 
         //게시글 상태 = 게시인 글만 조회
-        BoardRequestDto requestDtoSet = BoardRequestDto.builder()
+        final BoardRequestDto requestDtoSet = BoardRequestDto.builder()
                 .boardTypeCode(requestDto.getBoardTypeCode())
                 .postStatusCode(PostStatus.PUBLISHED)
                 .title(requestDto.getTitle())

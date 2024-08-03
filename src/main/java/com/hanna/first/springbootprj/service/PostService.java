@@ -13,15 +13,15 @@ public class PostService {
 
     private final PostRepository postRepository;
 
-    public PostService(PostRepository postRepository) {
+    public PostService(final PostRepository postRepository) {
         this.postRepository = postRepository;
     }
 
     /**********************************
      *  1. 게시글 조회
      **********************************/
-    public PostResponseDto getPost(Long id){
-        Post entity = postRepository.findById(id).orElseThrow(
+    public PostResponseDto getPost(final Long id){
+        final Post entity = postRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당 게시글이 없습니다. id"+ id)
         );
 
@@ -32,8 +32,8 @@ public class PostService {
      *  2. 게시글 등록
      **********************************/
     @Transactional
-    public void savePost(PostRequestDto requestDto){
-        Post entityDto = requestDto.toEntity();
+    public void savePost(final PostRequestDto requestDto){
+        final Post entityDto = requestDto.toEntity();
         postRepository.save(entityDto);
     }
 
@@ -41,8 +41,8 @@ public class PostService {
      *  3. 게시글 수정
      **********************************/
     @Transactional
-    public void updatePost(Long id, PostRequestDto requestDto){
-        Post entity = postRepository.findById(id).orElseThrow(
+    public void updatePost(final Long id, final PostRequestDto requestDto){
+        final Post entity = postRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당 게시글이 없습니다. id"+ id)
         );
 
@@ -54,8 +54,8 @@ public class PostService {
      *  4. 게시글 삭제
      **********************************/
     @Transactional
-    public void deletePost(Long id, PostRequestDto requestDto){
-        Post entity = postRepository.findById(id).orElseThrow(
+    public void deletePost(final Long id, final PostRequestDto requestDto){
+        final Post entity = postRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당 게시글이 없습니다. id"+ id)
         );
         
