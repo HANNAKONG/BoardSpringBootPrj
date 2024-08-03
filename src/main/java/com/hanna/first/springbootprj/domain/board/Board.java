@@ -30,6 +30,22 @@ public class Board {
     private List<Post> postList;
 
     /**********************************
+     *  기본 생성자
+     **********************************/
+    protected Board() {}
+
+    /**********************************
+     *  생성자
+     **********************************/
+    public Board(Long id, BoardType boardTypeCode, PostStatus postStatusCode, String title, String authorId) {
+        this.id = id;
+        this.boardTypeCode = boardTypeCode;
+        this.postStatusCode = postStatusCode;
+        this.title = title;
+        this.authorId = authorId;
+    }
+    
+    /**********************************
      *  getter
      **********************************/
     public Long getId() {
@@ -100,21 +116,5 @@ public class Board {
     public static Builder builder() {
         return new Builder();
     }
-
-    /**********************************
-     *  constructor
-     **********************************/
-    public Board(Long id, BoardType boardTypeCode, PostStatus postStatusCode, String title, String authorId) {
-        this.id = id;
-        this.boardTypeCode = boardTypeCode;
-        this.postStatusCode = postStatusCode;
-        this.title = title;
-        this.authorId = authorId;
-    }
-
-    /**********************************
-     *  기본 생성자
-     **********************************/
-    protected Board() {}
 
 }

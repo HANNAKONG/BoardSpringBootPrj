@@ -34,6 +34,32 @@ public class Post {
     private Board board;
 
     /**********************************
+     *  기본 생성자
+     **********************************/
+    protected Post() {}
+
+    /**********************************
+     *  생성자
+     **********************************/
+    public Post(Long id, BoardType boardTypeCode, PostStatus postStatusCode, String title, String content, String authorId) {
+        this.id = id;
+        this.boardTypeCode = boardTypeCode;
+        this.postStatusCode = postStatusCode;
+        this.title = title;
+        this.content = content;
+        this.authorId = authorId;
+    }
+
+    /**********************************
+     *  update method
+     **********************************/
+    public void update(PostStatus postStatusCode, String title, String content){
+        this.postStatusCode = postStatusCode;
+        this.title = title;
+        this.content = content;
+    }
+
+    /**********************************
      *  getter
      **********************************/
     public Long getId() {
@@ -114,32 +140,5 @@ public class Post {
     public static Builder builder() {
         return new Builder();
     }
-
-    /**********************************
-     *  constructor
-     **********************************/
-    public Post(Long id, BoardType boardTypeCode, PostStatus postStatusCode, String title, String content, String authorId) {
-        this.id = id;
-        this.boardTypeCode = boardTypeCode;
-        this.postStatusCode = postStatusCode;
-        this.title = title;
-        this.content = content;
-        this.authorId = authorId;
-    }
-    
-    /**********************************
-     *  기본 생성자
-     **********************************/
-    protected Post() {}
-
-    /**********************************
-     *  update method
-     **********************************/
-    public void update(PostStatus postStatusCode, String title, String content){
-        this.postStatusCode = postStatusCode;
-        this.title = title;
-        this.content = content;
-    }
-
 
 }
