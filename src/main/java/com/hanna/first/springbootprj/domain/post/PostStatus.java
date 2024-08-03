@@ -1,16 +1,10 @@
 package com.hanna.first.springbootprj.domain.post;
 
 public enum PostStatus {
-    DRAFT("01"),
-    PUBLISHED("02");
+    DRAFT,
+    PUBLISHED;
 
-    private final String code;
-
-    PostStatus(String code) {
-        this.code = code;
-    }
-
-    public String getCode() {
-        return code;
+    public String getPostStatus() {
+        return name();
     }
 }
