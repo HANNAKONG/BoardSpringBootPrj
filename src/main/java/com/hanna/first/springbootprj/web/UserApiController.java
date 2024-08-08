@@ -15,15 +15,16 @@ public class UserApiController {
     }
 
     /**********************************
+     *  테스트 필요
      *  1. 회원정보 조회
      **********************************/
     @GetMapping("/api/v1/user/{userId}")
-    public UserResponseDto getUserInfo(@RequestBody UserRequestDto requestDto){
-        return userService.getUserInfo(requestDto);
+    public UserResponseDto getUserInfo(@PathVariable("userId") String userId){
+        return userService.getUserInfo(userId);
     }
 
     /**********************************
-     *  2. 회원 가입 - 테스트 완료
+     *  2. 회원 가입
      **********************************/
     @PostMapping("/api/v1/signup")
     public void signup(@RequestBody UserRequestDto requestDto){
@@ -31,7 +32,7 @@ public class UserApiController {
     }
 
     /**********************************
-     *  3. 회원정보 수정 - 테스트 완료
+     *  3. 회원정보 수정
      **********************************/
     @PutMapping("/api/v1/updateUserInfo/{id}")
     public void updateUserInfo(@RequestBody UserRequestDto requestDto){
@@ -39,7 +40,7 @@ public class UserApiController {
     }
 
     /**********************************
-     *  4. 회원 탈퇴 - 테스트 완료
+     *  4. 회원 탈퇴
      **********************************/
     @DeleteMapping("/api/v1/deleteUserInfo/{id}")
     public void deleteUserInfo(@RequestBody UserRequestDto requestDto){

@@ -24,4 +24,26 @@ public class UserResponseDto {
         this.userRole = entity.getUserRole();
     }
 
+    /**********************************
+     *  getter
+     **********************************/
+    public Long getId() {
+        return id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public UserRole getUserRole() {
+        return userRole;
+    }
 }
