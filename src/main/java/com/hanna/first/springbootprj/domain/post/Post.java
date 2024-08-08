@@ -1,7 +1,8 @@
 package com.hanna.first.springbootprj.domain.post;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.hanna.first.springbootprj.domain.board.Board;
-import com.hanna.first.springbootprj.domain.board.BoardType;
+import com.hanna.first.springbootprj.domain.user.User;
 
 import javax.persistence.*;
 
@@ -14,10 +15,6 @@ public class Post {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private BoardType boardTypeCode;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private PostStatus postStatusCode;
 
     @Column(length = 500, nullable = false)
@@ -26,12 +23,14 @@ public class Post {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @Column(nullable = false)
-    private String authorId;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
+    @JsonBackReference
     private Board board;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     /**********************************
      *  기본 생성자
@@ -41,13 +40,13 @@ public class Post {
     /**********************************
      *  생성자
      **********************************/
-    public Post(Long id, BoardType boardTypeCode, PostStatus postStatusCode, String title, String content, String authorId) {
+    public Post(Long id, PostStatus postStatusCode, String title, String content, Board board, User user) {
         this.id = id;
-        this.boardTypeCode = boardTypeCode;
         this.postStatusCode = postStatusCode;
         this.title = title;
         this.content = content;
-        this.authorId = authorId;
+        this.board = board;
+        this.user = user;
     }
 
     /**********************************
@@ -66,10 +65,6 @@ public class Post {
         return id;
     }
 
-    public BoardType getBoardTypeCode() {
-        return boardTypeCode;
-    }
-
     public PostStatus getPostStatusCode() {
         return postStatusCode;
     }
@@ -82,12 +77,12 @@ public class Post {
         return content;
     }
 
-    public String getAuthorId() {
-        return authorId;
-    }
-
     public Board getBoard() {
         return board;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     /**********************************
@@ -95,19 +90,14 @@ public class Post {
      **********************************/
     public static class Builder {
         private Long id;
-        private BoardType boardTypeCode;
         private PostStatus postStatusCode;
         private String title;
         private String content;
-        private String authorId;
+        private Board board;
+        private User user;
 
         public Builder id(Long id) {
             this.id = id;
-            return this;
-        }
-
-        public Builder boardTypeCode(BoardType boardTypeCode) {
-            this.boardTypeCode = boardTypeCode;
             return this;
         }
 
@@ -126,15 +116,29 @@ public class Post {
             return this;
         }
 
-        public Builder authorId(String authorId) {
-            this.authorId = authorId;
+        public Builder board(Board board) {
+            this.board = board;
+            return this;
+        }
+
+        public Builder user(User user) {
+            this.user = user;
             return this;
         }
 
         public Post build() {
-            return new Post(id, boardTypeCode, postStatusCode, title, content, authorId);
-        }
+            Post post = new Post(id, postStatusCode, title, content, board, user);
 
+            // 연관관계 편의 메서드를 빌더에서 수행
+            if (board != null) {
+                board.getPostList().add(post);
+            }
+            if (user != null) {
+                user.getPostList().add(post);
+            }
+
+            return post;
+        }
     }
 
     public static Builder builder() {

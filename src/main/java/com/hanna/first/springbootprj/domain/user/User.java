@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name = "users")
 public class User {
 
     @Id
@@ -76,6 +77,10 @@ public class User {
         return userRole;
     }
 
+    public List<Post> getPostList() {
+        return postList;
+    }
+
     /**********************************
      *  builder
      **********************************/
@@ -86,6 +91,7 @@ public class User {
         private String password;
         private String userName;
         private UserRole userRole;
+        private List<Post> postList;
 
         public Builder id(Long id) {
             this.id = id;
@@ -109,6 +115,11 @@ public class User {
 
         public Builder userRole(UserRole userRole) {
             this.userRole = userRole;
+            return this;
+        }
+
+        public Builder postList(List<Post> postList) {
+            this.postList = postList;
             return this;
         }
 

@@ -1,7 +1,8 @@
 package com.hanna.first.springbootprj.domain.board;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.hanna.first.springbootprj.domain.post.Post;
-import com.hanna.first.springbootprj.domain.post.PostStatus;
+import com.hanna.first.springbootprj.domain.user.User;
 
 import javax.persistence.*;
 import java.util.List;
@@ -16,17 +17,11 @@ public class Board {
     @Column(nullable = false)
     private BoardType boardTypeCode;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private PostStatus postStatusCode;
-
     @Column(length = 500, nullable = false)
-    private String title;
-
-    @Column(nullable = false)
-    private String authorId;
+    private String boardName;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Post> postList;
 
     /**********************************
@@ -37,12 +32,10 @@ public class Board {
     /**********************************
      *  생성자
      **********************************/
-    public Board(Long id, BoardType boardTypeCode, PostStatus postStatusCode, String title, String authorId) {
+    public Board(Long id, BoardType boardTypeCode, String boardName) {
         this.id = id;
         this.boardTypeCode = boardTypeCode;
-        this.postStatusCode = postStatusCode;
-        this.title = title;
-        this.authorId = authorId;
+        this.boardName = boardName;
     }
     
     /**********************************
@@ -56,16 +49,8 @@ public class Board {
         return boardTypeCode;
     }
 
-    public PostStatus getPostStatusCode() {
-        return postStatusCode;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getAuthorId() {
-        return authorId;
+    public String getBoardName() {
+        return boardName;
     }
 
     public List<Post> getPostList() {
@@ -78,9 +63,8 @@ public class Board {
     public static class Builder {
         private Long id;
         private BoardType boardTypeCode;
-        private PostStatus postStatusCode;
-        private String title;
-        private String authorId;
+        private String boardName;
+        private List<Post> postList;
 
         public Builder id(Long id) {
             this.id = id;
@@ -92,23 +76,14 @@ public class Board {
             return this;
         }
 
-        public Builder postStatusCode(PostStatus postStatusCode) {
-            this.postStatusCode = postStatusCode;
+        public Builder boardName(String boardName) {
+            this.boardName = boardName;
             return this;
         }
 
-        public Builder title(String title) {
-            this.title = title;
-            return this;
-        }
-
-        public Builder authorId(String authorId) {
-            this.authorId = authorId;
-            return this;
-        }
 
         public Board build() {
-            return new Board(id, boardTypeCode, postStatusCode, title, authorId);
+            return new Board(id, boardTypeCode, boardName);
         }
 
     }
