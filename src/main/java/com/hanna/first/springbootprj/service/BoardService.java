@@ -2,9 +2,14 @@ package com.hanna.first.springbootprj.service;
 
 import com.hanna.first.springbootprj.domain.board.Board;
 import com.hanna.first.springbootprj.domain.board.BoardRepository;
+import com.hanna.first.springbootprj.domain.board.BoardType;
+import com.hanna.first.springbootprj.domain.post.Post;
 import com.hanna.first.springbootprj.domain.post.PostStatus;
+import com.hanna.first.springbootprj.domain.user.User;
 import com.hanna.first.springbootprj.web.dto.BoardRequestDto;
 import com.hanna.first.springbootprj.web.dto.BoardResponseDto;
+import com.hanna.first.springbootprj.web.dto.PostRequestDto;
+import com.hanna.first.springbootprj.web.dto.PostResponseDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,26 +24,15 @@ public class BoardService {
     public BoardService(final BoardRepository boardRepository) {
         this.boardRepository = boardRepository;
     }
-    
+
     /**********************************
-     *  1. 게시글 목록 조회
+     *  게시판 등록
      **********************************/
-    @Transactional(readOnly = true)
-    public List<BoardResponseDto> getBoardList(final BoardRequestDto requestDto){
-
-        //게시글 상태 = 게시인 글만 조회
-        final BoardRequestDto requestDtoSet = BoardRequestDto.builder()
-                .boardTypeCode(requestDto.getBoardTypeCode())
-                .postStatusCode(PostStatus.PUBLISHED)
-                .title(requestDto.getTitle())
-                .authorId(requestDto.getAuthorId())
-                .build();
-
-        //List<Board> boardList = boardRepository.findAllByBoardTypeCodeAndPostStatusCode(requestDtoSet);
-        List<Board> boardList = boardRepository.findAll();
-        return boardList.stream()
-                .map(BoardResponseDto::new)
-                .collect(Collectors.toList());
+    @Transactional
+    public void saveBoard(final BoardRequestDto requestDto){
+        final Board entityDto = requestDto.toEntity();
+        boardRepository.save(entityDto);
     }
+
 
 }

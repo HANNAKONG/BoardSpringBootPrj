@@ -21,9 +21,9 @@ public class UserService {
     /**********************************
      *  1. 회원정보 조회
      **********************************/
-    public UserResponseDto getUserInfo(final UserRequestDto requestDto){
-        final User entity = userRepository.findByUserId(requestDto.getUserId()).orElseThrow(
-                () -> new IllegalArgumentException("해당 회원이 없습니다. userId"+ requestDto.getUserId())
+    public UserResponseDto getUserInfo(final String userId){
+        final User entity = userRepository.findByUserId(userId).orElseThrow(
+                () -> new IllegalArgumentException("해당 회원이 없습니다. userId"+ userId)
         );
 
         return new UserResponseDto(entity);
