@@ -2,15 +2,31 @@ package com.hanna.first.springbootprj.web.dto;
 
 import com.hanna.first.springbootprj.domain.board.Board;
 import com.hanna.first.springbootprj.domain.board.BoardType;
-import com.hanna.first.springbootprj.domain.post.PostStatus;
 
 public class BoardRequestDto {
 
     private Long id;
     private BoardType boardTypeCode;
-    private PostStatus postStatusCode;
-    private String title;
-    private String authorId;
+    private String boardName;
+
+    /**********************************
+     *  constructor
+     **********************************/
+    public BoardRequestDto(Long id, BoardType boardTypeCode, String boardName) {
+        this.id = id;
+        this.boardTypeCode = boardTypeCode;
+        this.boardName = boardName;
+    }
+
+    /**********************************
+     *  toEntity
+     **********************************/
+    public Board toEntity(){
+        return Board.builder()
+                .boardTypeCode(boardTypeCode)
+                .boardName(boardName)
+                .build();
+    }
 
     /**********************************
      *  getter
@@ -23,16 +39,8 @@ public class BoardRequestDto {
         return boardTypeCode;
     }
 
-    public PostStatus getPostStatusCode() {
-        return postStatusCode;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getAuthorId() {
-        return authorId;
+    public String getBoardName() {
+        return boardName;
     }
 
     /**********************************
@@ -41,9 +49,7 @@ public class BoardRequestDto {
     public static class Builder {
         private Long id;
         private BoardType boardTypeCode;
-        private PostStatus postStatusCode;
-        private String title;
-        private String authorId;
+        private String boardName;
 
         public Builder id(Long id) {
             this.id = id;
@@ -55,51 +61,18 @@ public class BoardRequestDto {
             return this;
         }
 
-        public Builder postStatusCode(PostStatus postStatusCode) {
-            this.postStatusCode = postStatusCode;
-            return this;
-        }
-
-        public Builder title(String title) {
-            this.title = title;
-            return this;
-        }
-
-        public Builder authorId(String authorId) {
-            this.authorId = authorId;
+        public Builder boardName(String boardName) {
+            this.boardName = boardName;
             return this;
         }
 
         public BoardRequestDto build() {
-            return new BoardRequestDto(id, boardTypeCode, postStatusCode, title, authorId);
+            return new BoardRequestDto(id, boardTypeCode, boardName);
         }
 
     }
 
     public static Builder builder() {
         return new Builder();
-    }
-
-    /**********************************
-     *  constructor
-     **********************************/
-    public BoardRequestDto(Long id, BoardType boardTypeCode, PostStatus postStatusCode, String title, String authorId) {
-        this.id = id;
-        this.boardTypeCode = boardTypeCode;
-        this.postStatusCode = postStatusCode;
-        this.title = title;
-        this.authorId = authorId;
-    }
-
-    /**********************************
-     *  toEntity
-     **********************************/
-    public Board toEntity(){
-        return Board.builder()
-                .boardTypeCode(boardTypeCode)
-                .postStatusCode(postStatusCode)
-                .title(title)
-                .authorId(authorId)
-                .build();
     }
 }

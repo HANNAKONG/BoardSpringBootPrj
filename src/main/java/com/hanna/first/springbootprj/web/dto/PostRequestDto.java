@@ -1,28 +1,49 @@
 package com.hanna.first.springbootprj.web.dto;
 
 import com.hanna.first.springbootprj.domain.board.Board;
-import com.hanna.first.springbootprj.domain.board.BoardType;
 import com.hanna.first.springbootprj.domain.post.Post;
 import com.hanna.first.springbootprj.domain.post.PostStatus;
+import com.hanna.first.springbootprj.domain.user.User;
 
 public class PostRequestDto {
 
     private Long id;
-    private BoardType boardTypeCode;
     private PostStatus postStatusCode;
     private String title;
     private String content;
-    private String authorId;
+    private Long boardId;
+    private Long userId;
+
+    /**********************************
+     *  constructor
+     **********************************/
+    public PostRequestDto(Long id, PostStatus postStatusCode, String title, String content, Long boardId, Long userId) {
+        this.id = id;
+        this.postStatusCode = postStatusCode;
+        this.title = title;
+        this.content = content;
+        this.boardId = boardId;
+        this.userId = userId;
+    }
+
+    /**********************************
+     *  toEntity
+     **********************************/
+    public Post toEntity(Board board, User user){
+        return Post.builder()
+                .postStatusCode(postStatusCode)
+                .title(title)
+                .content(content)
+                .board(board)
+                .user(user)
+                .build();
+    }
 
     /**********************************
      *  getter
      **********************************/
     public Long getId() {
         return id;
-    }
-
-    public BoardType getBoardTypeCode() {
-        return boardTypeCode;
     }
 
     public PostStatus getPostStatusCode() {
@@ -37,8 +58,12 @@ public class PostRequestDto {
         return content;
     }
 
-    public String getAuthorId() {
-        return authorId;
+    public Long getBoardId() {
+        return boardId;
+    }
+
+    public Long getUserId() {
+        return userId;
     }
 
     /**********************************
@@ -46,19 +71,14 @@ public class PostRequestDto {
      **********************************/
     public static class Builder {
         private Long id;
-        private BoardType boardTypeCode;
         private PostStatus postStatusCode;
         private String title;
         private String content;
-        private String authorId;
+        private Long boardId;
+        private Long userId;
 
         public Builder id(Long id) {
             this.id = id;
-            return this;
-        }
-
-        public Builder boardTypeCode(BoardType boardTypeCode) {
-            this.boardTypeCode = boardTypeCode;
             return this;
         }
 
@@ -78,13 +98,18 @@ public class PostRequestDto {
             return this;
         }
 
-        public Builder authorId(String authorId) {
-            this.authorId = authorId;
+        public Builder boardId(Long boardId) {
+            this.boardId = boardId;
+            return this;
+        }
+
+        public Builder userId(Long userId) {
+            this.userId = userId;
             return this;
         }
 
         public PostRequestDto build() {
-            return new PostRequestDto(id, boardTypeCode, postStatusCode, title, content, authorId);
+            return new PostRequestDto(id, postStatusCode, title, content, boardId, userId);
         }
 
     }
@@ -92,31 +117,5 @@ public class PostRequestDto {
     public static Builder builder() {
         return new Builder();
     }
-
-    /**********************************
-     *  constructor
-     **********************************/
-    public PostRequestDto(Long id, BoardType boardTypeCode, PostStatus postStatusCode, String title, String content, String authorId) {
-        this.id = id;
-        this.boardTypeCode = boardTypeCode;
-        this.postStatusCode = postStatusCode;
-        this.title = title;
-        this.content = content;
-        this.authorId = authorId;
-    }
-
-    /**********************************
-     *  toEntity
-     **********************************/
-    public Post toEntity(){
-        return Post.builder()
-                .boardTypeCode(boardTypeCode)
-                .postStatusCode(postStatusCode)
-                .title(title)
-                .content(content)
-                .authorId(authorId)
-                .build();
-    }
-
 
 }
