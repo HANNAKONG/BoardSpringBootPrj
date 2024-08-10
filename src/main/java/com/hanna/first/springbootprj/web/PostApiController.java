@@ -22,7 +22,6 @@ public class PostApiController {
     }
 
     /**********************************
-     *  테스트 필요
      *  게시글 조회
      **********************************/
     @GetMapping("/api/v1/post/{id}")
@@ -39,12 +38,10 @@ public class PostApiController {
     }
 
     /**********************************
-     *  테스트 필요
-     *  2. 게시글 목록 조회 - 아이디로 조회(임시저장/공개글)
+     *  2. 게시글 목록 조회 - 아이디, 게시글 상태(임시저장/공개글)로 조회
      **********************************/
     @GetMapping("/api/v1/postList")
-    public List<Post> getPostList(@RequestBody PostRequestDto requestDto) {
-        System.out.println("controller========> "+requestDto.getUserId()+" "+requestDto.getPostStatusCode());
+    public List<PostResponseDto> getPostList(@RequestBody PostRequestDto requestDto) {
         return postService.getPostList(requestDto);
     }
 

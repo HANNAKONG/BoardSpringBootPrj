@@ -14,5 +14,5 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findAllWithPostsByBoardType(@Param("boardTypeCode") BoardType boardTypeCode);
 
     @Query("SELECT p FROM Post p WHERE p.user.userId = :userId AND p.postStatusCode = :postStatusCode")
-    List<Post> findByUserIdAndPostStatus(@Param("userId") String userId, @Param("postStatusCode") PostStatus postStatusCode);
+    List<Post> findAllByUserIdAndPostStatus(@Param("userId") String userId, @Param("postStatusCode") PostStatus postStatusCode);
 }

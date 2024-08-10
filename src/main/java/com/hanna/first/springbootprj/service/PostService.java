@@ -46,28 +46,31 @@ public class PostService {
      **********************************/
     @Transactional(readOnly = true)
     public List<PostResponseDto> getBoardList(final BoardType boardTypeCode){
-        List<Post> boardList = postRepository.findAllWithPostsByBoardType(boardTypeCode);
+        List<Post> entityBoardList = postRepository.findAllWithPostsByBoardType(boardTypeCode);
 
-        return boardList.stream()
+        return entityBoardList.stream()
                 .map(PostResponseDto::new)
                 .collect(Collectors.toList());
     }
 
     /**********************************
-     *  2. 게시글 목록 조회 - 아이디로 조회(임시저장/공개글)
+     *  2. 게시글 목록 조회 - 아이디, 게시글 상태(임시저장/공개글)로 조회
      **********************************/
-    public List<Post> getPostList(final PostRequestDto requestDto) {
+    public List<PostResponseDto> getPostList(final PostRequestDto requestDto) {
         Board board = boardRepository.findById(requestDto.getBoardId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid board ID: " + requestDto.getBoardId()));
         User user = userRepository.findById(requestDto.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user ID: " + requestDto.getUserId()));
-        System.out.println("service1111========> "+requestDto.getUserId()+" "+requestDto.getPostStatusCode());
 
         PostStatus postStatusCode = requestDto.getPostStatusCode();
         Post entity = requestDto.toEntity(board, user);
         String userId = entity.getUser().getUserId();
-        System.out.println("service2222222========> "+userId+" "+postStatusCode);
-        return postRepository.findByUserIdAndPostStatus(userId, postStatusCode);
+
+        List<Post> entityPostList = postRepository.findAllByUserIdAndPostStatus(userId, postStatusCode);
+
+        return entityPostList.stream()
+                .map(PostResponseDto::new)
+                .collect(Collectors.toList());
     }
 
     /**********************************
