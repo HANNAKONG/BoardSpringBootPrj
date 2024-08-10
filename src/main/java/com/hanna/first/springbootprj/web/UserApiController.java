@@ -15,7 +15,6 @@ public class UserApiController {
     }
 
     /**********************************
-     *  테스트 필요
      *  1. 회원정보 조회
      **********************************/
     @GetMapping("/api/v1/user/{userId}")
