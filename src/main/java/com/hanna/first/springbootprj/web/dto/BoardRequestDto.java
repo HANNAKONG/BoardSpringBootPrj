@@ -12,6 +12,9 @@ public class BoardRequestDto {
     /**********************************
      *  constructor
      **********************************/
+    public BoardRequestDto() {
+    }
+
     public BoardRequestDto(Long id, BoardType boardTypeCode, String boardName) {
         this.id = id;
         this.boardTypeCode = boardTypeCode;

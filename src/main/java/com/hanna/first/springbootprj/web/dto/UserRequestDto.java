@@ -14,6 +14,9 @@ public class UserRequestDto {
     /**********************************
      *  생성자
      **********************************/
+    public UserRequestDto() {
+    }
+
     public UserRequestDto(Long id, String userId, String password, String userName, UserRole userRole) {
         this.id = id;
         this.userId = userId;

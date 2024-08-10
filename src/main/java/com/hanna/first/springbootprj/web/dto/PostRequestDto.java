@@ -17,6 +17,9 @@ public class PostRequestDto {
     /**********************************
      *  constructor
      **********************************/
+    public PostRequestDto() {
+    }
+
     public PostRequestDto(Long id, PostStatus postStatusCode, String title, String content, Long boardId, Long userId) {
         this.id = id;
         this.postStatusCode = postStatusCode;
