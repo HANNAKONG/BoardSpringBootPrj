@@ -1,13 +1,14 @@
 package com.hanna.first.springbootprj.domain.post;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.hanna.first.springbootprj.domain.BaseTime;
 import com.hanna.first.springbootprj.domain.board.Board;
 import com.hanna.first.springbootprj.domain.user.User;
 
 import javax.persistence.*;
 
 @Entity
-public class Post {
+public class Post extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

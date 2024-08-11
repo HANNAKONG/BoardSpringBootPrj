@@ -1,5 +1,6 @@
 package com.hanna.first.springbootprj.domain.user;
 
+import com.hanna.first.springbootprj.domain.BaseTime;
 import com.hanna.first.springbootprj.domain.post.Post;
 
 import javax.persistence.*;
@@ -7,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
