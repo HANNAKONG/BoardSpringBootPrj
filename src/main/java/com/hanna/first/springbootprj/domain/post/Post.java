@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.hanna.first.springbootprj.domain.BaseTime;
 import com.hanna.first.springbootprj.domain.board.Board;
 import com.hanna.first.springbootprj.domain.user.User;
-
 import javax.persistence.*;
 
 @Entity

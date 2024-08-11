@@ -2,7 +2,6 @@ package com.hanna.first.springbootprj.domain.user;
 
 import com.hanna.first.springbootprj.domain.BaseTime;
 import com.hanna.first.springbootprj.domain.post.Post;
-
 import javax.persistence.*;
 import java.util.List;
 
