@@ -2,7 +2,6 @@ package com.hanna.first.springbootprj.domain.board;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.hanna.first.springbootprj.domain.post.Post;
-import com.hanna.first.springbootprj.domain.user.User;
 
 import javax.persistence.*;
 import java.util.List;
@@ -34,6 +33,14 @@ public class Board {
      **********************************/
     public Board(Long id, BoardType boardTypeCode, String boardName) {
         this.id = id;
+        this.boardTypeCode = boardTypeCode;
+        this.boardName = boardName;
+    }
+
+    /**********************************
+     *  update method
+     **********************************/
+    public void update(BoardType boardTypeCode, String boardName){
         this.boardTypeCode = boardTypeCode;
         this.boardName = boardName;
     }
