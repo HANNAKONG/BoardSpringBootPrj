@@ -49,9 +49,15 @@ public class User extends BaseTime {
      *  update method
      **********************************/
     public void update(String password, String userName, UserRole userRole){
-        this.password = password;
-        this.userName = userName;
-        this.userRole = userRole;
+        if(password != null){
+            this.password = password;
+        }
+        if(userName != null){
+            this.userName = userName;
+        }
+        if(userRole != null){
+            this.userRole = userRole;
+        }
     }
 
     /**********************************

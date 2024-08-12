@@ -41,8 +41,12 @@ public class Board {
      *  update method
      **********************************/
     public void update(BoardType boardTypeCode, String boardName){
-        this.boardTypeCode = boardTypeCode;
-        this.boardName = boardName;
+        if(boardTypeCode != null){
+            this.boardTypeCode = boardTypeCode;
+        }
+        if(boardName != null){
+            this.boardName = boardName;
+        }
     }
     
     /**********************************

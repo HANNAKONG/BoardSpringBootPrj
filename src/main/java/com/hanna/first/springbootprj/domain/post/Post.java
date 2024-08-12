@@ -53,9 +53,15 @@ public class Post extends BaseTime {
      *  update method
      **********************************/
     public void update(PostStatus postStatusCode, String title, String content){
-        this.postStatusCode = postStatusCode;
-        this.title = title;
-        this.content = content;
+        if(postStatusCode != null){
+            this.postStatusCode = postStatusCode;
+        }
+        if(title != null){
+            this.title = title;
+        }
+        if(content != null){
+            this.content = content;
+        }
     }
 
     /**********************************
