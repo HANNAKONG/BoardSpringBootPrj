@@ -1,10 +1,8 @@
 package com.hanna.first.springbootprj.web;
 
 import com.hanna.first.springbootprj.domain.board.BoardType;
-import com.hanna.first.springbootprj.domain.post.Post;
+import com.hanna.first.springbootprj.domain.post.PostStatus;
 import com.hanna.first.springbootprj.service.PostService;
-import com.hanna.first.springbootprj.web.dto.BoardRequestDto;
-import com.hanna.first.springbootprj.web.dto.BoardResponseDto;
 import com.hanna.first.springbootprj.web.dto.PostRequestDto;
 import com.hanna.first.springbootprj.web.dto.PostResponseDto;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +22,7 @@ public class PostApiController {
     /**********************************
      *  게시글 조회
      **********************************/
-    @GetMapping("/api/v1/post/{id}")
+    @GetMapping("/api/v1/posts/{id}")
     public PostResponseDto getPost(@PathVariable Long id){
         return postService.getPost(id);
     }
@@ -32,7 +30,7 @@ public class PostApiController {
     /**********************************
      *  1. 게시글 목록 조회 - 게시판 유형별 조회
      **********************************/
-    @GetMapping("/api/v1/boardList/{boardTypeCode}")
+    @GetMapping("/api/v1/posts/boardType/{boardTypeCode}")
     public List<PostResponseDto> getBoardList(@PathVariable BoardType boardTypeCode){
         return postService.getBoardList(boardTypeCode);
     }
@@ -40,15 +38,16 @@ public class PostApiController {
     /**********************************
      *  2. 게시글 목록 조회 - 아이디, 게시글 상태(임시저장/공개글)로 조회
      **********************************/
-    @GetMapping("/api/v1/postList")
-    public List<PostResponseDto> getPostList(@RequestBody PostRequestDto requestDto) {
-        return postService.getPostList(requestDto);
+    @GetMapping("/api/v1/posts")
+    public List<PostResponseDto> getPostList(@RequestParam String userId,
+                                             @RequestParam PostStatus postStatusCode) {
+        return postService.getPostList(userId, postStatusCode);
     }
 
     /**********************************
      *  3. 게시글 등록
      **********************************/
-    @PostMapping("/api/v1/post")
+    @PostMapping("/api/v1/posts")
     public void savePost(@RequestBody PostRequestDto requestDto){
         postService.savePost(requestDto);
     }
@@ -56,19 +55,17 @@ public class PostApiController {
     /**********************************
      *  4. 게시글 수정
      **********************************/
-    @PutMapping("/api/v1/post/{id}")
-    public void updatePost(@RequestBody PostRequestDto requestDto){
-        postService.updatePost(requestDto);
+    @PatchMapping("/api/v1/posts/{id}")
+    public void updatePost(@PathVariable Long id, @RequestBody PostRequestDto requestDto){
+        postService.updatePost(id, requestDto);
     }
 
     /**********************************
      *  5. 게시글 삭제
      **********************************/
-    @DeleteMapping("/api/v1/post/{id}")
-    public void deletePost(@PathVariable Long id, @RequestBody PostRequestDto requestDto){
-        postService.deletePost(id, requestDto);
+    @DeleteMapping("/api/v1/posts/{id}")
+    public void deletePost(@PathVariable Long id){
+        postService.deletePost(id);
     }
-
-
 
 }

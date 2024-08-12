@@ -46,7 +46,7 @@ public class PostService {
      **********************************/
     @Transactional(readOnly = true)
     public List<PostResponseDto> getBoardList(final BoardType boardTypeCode){
-        List<Post> entityBoardList = postRepository.findAllWithPostsByBoardType(boardTypeCode);
+        final List<Post> entityBoardList = postRepository.findAllWithPostsByBoardType(boardTypeCode);
 
         return entityBoardList.stream()
                 .map(PostResponseDto::new)
@@ -56,17 +56,13 @@ public class PostService {
     /**********************************
      *  2. 게시글 목록 조회 - 아이디, 게시글 상태(임시저장/공개글)로 조회
      **********************************/
-    public List<PostResponseDto> getPostList(final PostRequestDto requestDto) {
-        Board board = boardRepository.findById(requestDto.getBoardId())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid board ID: " + requestDto.getBoardId()));
-        User user = userRepository.findById(requestDto.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user ID: " + requestDto.getUserId()));
+    public List<PostResponseDto> getPostList(final String userId,
+                                             final PostStatus postStatusCode) {
 
-        PostStatus postStatusCode = requestDto.getPostStatusCode();
-        Post entity = requestDto.toEntity(board, user);
-        String userId = entity.getUser().getUserId();
+        final User user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다. userId" + userId));
 
-        List<Post> entityPostList = postRepository.findAllByUserIdAndPostStatus(userId, postStatusCode);
+        final List<Post> entityPostList = postRepository.findAllByUserIdAndPostStatus(userId, postStatusCode);
 
         return entityPostList.stream()
                 .map(PostResponseDto::new)
@@ -78,9 +74,9 @@ public class PostService {
      **********************************/
     @Transactional
     public void savePost(final PostRequestDto requestDto){
-        Board board = boardRepository.findById(requestDto.getBoardId())
+        final Board board = boardRepository.findById(requestDto.getBoardId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid board ID: " + requestDto.getBoardId()));
-        User user = userRepository.findById(requestDto.getUserId())
+        final User user = userRepository.findById(requestDto.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user ID: " + requestDto.getUserId()));
 
         final Post entityDto = requestDto.toEntity(board, user);
@@ -91,9 +87,9 @@ public class PostService {
      *  4. 게시글 수정
      **********************************/
     @Transactional
-    public void updatePost(final PostRequestDto requestDto){
-        final Post entity = postRepository.findById(requestDto.getId()).orElseThrow(
-                () -> new IllegalArgumentException("해당 게시글이 없습니다. id"+ requestDto.getId())
+    public void updatePost(final Long id, final PostRequestDto requestDto){
+        final Post entity = postRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("해당 게시글이 없습니다. id"+ id)
         );
 
         entity.update(requestDto.getPostStatusCode(), requestDto.getTitle(), requestDto.getContent());
@@ -104,7 +100,7 @@ public class PostService {
      *  5. 게시글 삭제
      **********************************/
     @Transactional
-    public void deletePost(final Long id, final PostRequestDto requestDto){
+    public void deletePost(final Long id){
         final Post entity = postRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당 게시글이 없습니다. id"+ id)
         );

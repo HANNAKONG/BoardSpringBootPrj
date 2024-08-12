@@ -35,7 +35,7 @@ public class UserService {
     @Transactional
     public void signup(final UserRequestDto requestDto){
         //중복여부 check
-        userRepository.findByUserId(requestDto.getUserId()).ifPresent(user -> {
+        userRepository.findByUserId(requestDto.getUserId()).ifPresent((final User user) -> {
             throw new IllegalArgumentException("이미 가입된 회원입니다. userId: " + requestDto.getUserId());
         });
 
@@ -47,9 +47,9 @@ public class UserService {
      *  3. 회원정보 수정
      **********************************/
     @Transactional
-    public void updateUserInfo(final UserRequestDto requestDto){
-        final User entity = userRepository.findByUserId(requestDto.getUserId()).orElseThrow(
-                () -> new IllegalArgumentException("해당 회원이 없습니다. userId"+ requestDto.getUserId())
+    public void updateUserInfo(final String userId, final UserRequestDto requestDto){
+        final User entity = userRepository.findByUserId(userId).orElseThrow(
+                () -> new IllegalArgumentException("해당 회원이 없습니다. userId"+ userId)
         );
 
         entity.update(requestDto.getPassword(), requestDto.getUserName(), requestDto.getUserRole());
@@ -59,9 +59,9 @@ public class UserService {
      *  4. 회원 탈퇴
      **********************************/
     @Transactional
-    public void deleteUserInfo(final UserRequestDto requestDto){
-        final User entity = userRepository.findByUserId(requestDto.getUserId()).orElseThrow(
-                () -> new IllegalArgumentException("해당 회원이 없습니다. userId"+ requestDto.getUserId())
+    public void deleteUserInfo(final String userId){
+        final User entity = userRepository.findByUserId(userId).orElseThrow(
+                () -> new IllegalArgumentException("해당 회원이 없습니다. userId"+ userId)
         );
 
         userRepository.delete(entity);

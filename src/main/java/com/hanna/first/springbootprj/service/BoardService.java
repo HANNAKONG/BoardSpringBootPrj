@@ -42,7 +42,7 @@ public class BoardService {
      *  3. 게시판 삭제
      **********************************/
     @Transactional
-    public void deleteBoard(final Long id, final BoardRequestDto requestDto){
+    public void deleteBoard(final Long id){
         final Board entity = boardRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당 게시판이 없습니다. id"+ id)
         );
