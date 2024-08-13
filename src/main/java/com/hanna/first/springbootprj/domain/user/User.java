@@ -13,10 +13,10 @@ public class User extends BaseTime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 20, nullable = false, unique = true)
     private String userId;
 
-    @Column(length = 10, nullable = false)
+    @Column(length = 100, nullable = false)
     private String password;
 
     @Column(nullable = false)
@@ -26,7 +26,7 @@ public class User extends BaseTime {
     @Column(nullable = false)
     private UserRole userRole;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user")
     private List<Post> postList;
 
     /**********************************
