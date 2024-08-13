@@ -138,9 +138,6 @@ public class Post extends BaseTime {
             if (board != null) {
                 board.getPostList().add(post);
             }
-            if (user != null) {
-                user.getPostList().add(post);
-            }
 
             return post;
         }

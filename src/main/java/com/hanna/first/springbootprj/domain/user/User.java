@@ -26,9 +26,6 @@ public class User extends BaseTime {
     @Column(nullable = false)
     private UserRole userRole;
 
-    @OneToMany(mappedBy = "user")
-    private List<Post> postList;
-
     /**********************************
      *  기본 생성자
      **********************************/
@@ -83,10 +80,6 @@ public class User extends BaseTime {
         return userRole;
     }
 
-    public List<Post> getPostList() {
-        return postList;
-    }
-
     /**********************************
      *  builder
      **********************************/
@@ -97,7 +90,6 @@ public class User extends BaseTime {
         private String password;
         private String userName;
         private UserRole userRole;
-        private List<Post> postList;
 
         public Builder id(Long id) {
             this.id = id;
@@ -121,11 +113,6 @@ public class User extends BaseTime {
 
         public Builder userRole(UserRole userRole) {
             this.userRole = userRole;
-            return this;
-        }
-
-        public Builder postList(List<Post> postList) {
-            this.postList = postList;
             return this;
         }
 
