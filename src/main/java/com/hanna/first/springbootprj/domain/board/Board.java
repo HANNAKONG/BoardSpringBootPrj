@@ -1,6 +1,5 @@
 package com.hanna.first.springbootprj.domain.board;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.hanna.first.springbootprj.domain.post.Post;
 
 import javax.persistence.*;
@@ -20,7 +19,6 @@ public class Board {
     private String boardName;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
     private List<Post> postList;
 
     /**********************************
