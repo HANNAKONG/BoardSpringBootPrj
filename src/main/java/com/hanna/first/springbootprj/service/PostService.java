@@ -46,7 +46,7 @@ public class PostService {
      **********************************/
     @Transactional(readOnly = true)
     public List<PostResponseDto> getBoardList(final BoardType boardTypeCode){
-        final List<Post> entityBoardList = postRepository.findAllWithPostsByBoardType(boardTypeCode);
+        final List<Post> entityBoardList = postRepository.findAllByBoard_BoardTypeCode(boardTypeCode);
 
         return entityBoardList.stream()
                 .map(PostResponseDto::new)

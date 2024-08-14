@@ -10,9 +10,8 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findByUserId(String userId);
 
-    @Query("SELECT p FROM Post p JOIN p.board b WHERE b.boardTypeCode = :boardTypeCode")
-    List<Post> findAllWithPostsByBoardType(@Param("boardTypeCode") BoardType boardTypeCode);
+    List<Post> findAllByBoard_BoardTypeCode(@Param("boardTypeCode") BoardType boardTypeCode);
 
-    @Query("SELECT p FROM Post p WHERE p.user.userId = :userId AND p.postStatusCode = :postStatusCode")
+    @Query("SELECT p FROM Post p JOIN FETCH p.user WHERE p.user.userId = :userId AND p.postStatusCode = :postStatusCode")
     List<Post> findAllByUserIdAndPostStatus(@Param("userId") String userId, @Param("postStatusCode") PostStatus postStatusCode);
 }
