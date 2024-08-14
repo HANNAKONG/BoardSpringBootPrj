@@ -1,9 +1,10 @@
 package com.hanna.first.springbootprj.web.dto;
 
-import com.hanna.first.springbootprj.domain.post.Post;
-import com.hanna.first.springbootprj.domain.post.PostStatus;
 import com.hanna.first.springbootprj.domain.user.User;
 import com.hanna.first.springbootprj.domain.user.UserRole;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class UserResponseDto {
 
@@ -12,6 +13,7 @@ public class UserResponseDto {
     private String password;
     private String userName;
     private UserRole userRole;
+    private LocalDateTime createdDate;
 
     /**********************************
      *  constructor (entity to dto)
@@ -22,6 +24,7 @@ public class UserResponseDto {
         this.password = entity.getPassword();
         this.userName = entity.getUserName();
         this.userRole = entity.getUserRole();
+        this.createdDate = entity.getCreatedDate();
     }
 
     /**********************************
@@ -46,4 +49,10 @@ public class UserResponseDto {
     public UserRole getUserRole() {
         return userRole;
     }
+
+    public String getCreatedDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return createdDate.format(formatter);
+    }
+
 }
