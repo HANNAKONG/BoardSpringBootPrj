@@ -1,13 +1,17 @@
 package com.hanna.first.springbootprj.domain.user;
 
 import com.hanna.first.springbootprj.domain.BaseTime;
-import com.hanna.first.springbootprj.domain.post.Post;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
-import java.util.List;
+import java.util.Collection;
+import java.util.Collections;
 
 @Entity
 @Table(name = "users")
-public class User extends BaseTime {
+public class User extends BaseTime implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,7 +20,7 @@ public class User extends BaseTime {
     @Column(length = 20, nullable = false, unique = true)
     private String userId;
 
-    @Column(length = 100, nullable = false)
+    @Column(length = 255, nullable = false)
     private String password;
 
     @Column(nullable = false)
@@ -68,9 +72,9 @@ public class User extends BaseTime {
         return userId;
     }
 
-    public String getPassword() {
-        return password;
-    }
+//    public String getPassword() {
+//        return password;
+//    }
 
     public String getUserName() {
         return userName;
@@ -124,5 +128,42 @@ public class User extends BaseTime {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // Return user roles as GrantedAuthority
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + userRole.name()));
+    }
+
+    @Override
+    public String getUsername() {
+        return userId;
+    }
+
+    @Override
+    public String getPassword() {
+        return password; // `UserDetails` 인터페이스에서 오버라이드
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true; // 계정 만료 여부를 확인하는 로직
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true; // 계정 잠금 여부를 확인하는 로직
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true; // 자격 증명 만료 여부를 확인하는 로직
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true; // 계정 활성화 여부를 확인하는 로직
     }
 }

@@ -6,6 +6,7 @@ import com.hanna.first.springbootprj.domain.user.UserRepository;
 import com.hanna.first.springbootprj.domain.user.UserRole;
 import com.hanna.first.springbootprj.web.dto.UserRequestDto;
 import com.hanna.first.springbootprj.web.dto.UserResponseDto;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,9 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(final UserRepository userRepository) {
+    public UserService(final UserRepository userRepository, final PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     /**********************************
@@ -39,6 +42,11 @@ public class UserService {
             throw new IllegalArgumentException("이미 가입된 회원입니다. userId: " + requestDto.getUserId());
         });
 
+        //비밀번호 암호화
+        String encodedPassword = passwordEncoder.encode(requestDto.getPassword());
+        System.out.println("서비스 비밀번호 암호화=====>" +encodedPassword);
+
+        requestDto.setPassword(encodedPassword);
         final User entityDto = requestDto.toEntity();
         userRepository.save(entityDto);
     }

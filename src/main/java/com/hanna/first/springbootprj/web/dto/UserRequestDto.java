@@ -60,6 +60,11 @@ public class UserRequestDto {
         return userRole;
     }
 
+    //임시 setter
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     /**********************************
      *  builder
      **********************************/
