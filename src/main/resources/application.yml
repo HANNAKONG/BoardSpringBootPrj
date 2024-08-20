@@ -28,5 +28,9 @@ spring:
       org.hibernate.SQL: DEBUG
       org.hibernate.type.descriptor.sql.BasicBinder: TRACE
 
+  #jwt
+  jwt:
+    secret: mySecretKey123456!!!!!!!!!!!!!!!!!!!
+
 #  autoconfigure:
 #    exclude: org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration
