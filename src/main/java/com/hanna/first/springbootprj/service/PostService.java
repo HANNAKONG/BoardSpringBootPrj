@@ -35,7 +35,7 @@ public class PostService {
      **********************************/
     public PostResponseDto getPost(final Long id){
         final Post entity = postRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("해당 게시글이 없습니다. id"+ id)
+                () -> new IllegalArgumentException("해당 게시글이 없습니다.")
         );
 
         return new PostResponseDto(entity);
@@ -60,7 +60,7 @@ public class PostService {
                                              final PostStatus postStatusCode) {
 
         final User user = userRepository.findByUserId(userId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다. userId" + userId));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다. 아이디: " + userId));
 
         final List<Post> entityPostList = postRepository.findAllByUserIdAndPostStatus(userId, postStatusCode);
 
@@ -89,11 +89,10 @@ public class PostService {
     @Transactional
     public void updatePost(final Long id, final PostRequestDto requestDto){
         final Post entity = postRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("해당 게시글이 없습니다. id"+ id)
+                () -> new IllegalArgumentException("해당 게시글이 없습니다.")
         );
 
         entity.update(requestDto.getPostStatusCode(), requestDto.getTitle(), requestDto.getContent());
-
     }
 
     /**********************************
@@ -102,7 +101,7 @@ public class PostService {
     @Transactional
     public void deletePost(final Long id){
         final Post entity = postRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("해당 게시글이 없습니다. id"+ id)
+                () -> new IllegalArgumentException("해당 게시글이 없습니다.")
         );
         
         postRepository.delete(entity);
