@@ -1,4 +1,4 @@
-package com.hanna.first.springbootprj.config.auth;
+package com.hanna.first.springbootprj.security;
 
 import com.hanna.first.springbootprj.domain.user.User;
 import com.hanna.first.springbootprj.domain.user.UserRepository;
@@ -11,8 +11,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public CustomUserDetailsService(UserRepository userRepository){
+        this.userRepository = userRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {

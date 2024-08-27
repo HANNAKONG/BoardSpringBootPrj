@@ -1,4 +1,4 @@
-package com.hanna.first.springbootprj.config.auth;
+package com.hanna.first.springbootprj.security;
 
 import com.hanna.first.springbootprj.domain.user.UserRole;
 import io.jsonwebtoken.Claims;
@@ -20,6 +20,7 @@ import java.util.List;
 
 @Component
 public class JwtTokenProvider {
+
     private final CustomUserDetailsService customUserDetailsService;
 
     public JwtTokenProvider(CustomUserDetailsService customUserDetailsService){

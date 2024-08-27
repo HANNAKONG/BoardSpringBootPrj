@@ -1,13 +1,13 @@
-package com.hanna.first.springbootprj.config.auth.dto;
+package com.hanna.first.springbootprj.security.dto;
 
-public class EntryPointErrorResponse {
+public class ErrorResponse {
 
     private String msg;
 
-    public EntryPointErrorResponse() {
+    public ErrorResponse() {
     }
 
-    public EntryPointErrorResponse(String msg) {
+    public ErrorResponse(String msg) {
         this.msg = msg;
     }
 
