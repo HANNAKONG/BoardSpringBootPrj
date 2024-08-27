@@ -3,7 +3,11 @@ package com.hanna.first.springbootprj.web;
 import com.hanna.first.springbootprj.service.UserService;
 import com.hanna.first.springbootprj.web.dto.UserRequestDto;
 import com.hanna.first.springbootprj.web.dto.UserResponseDto;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 @RestController
 public class UserApiController {
@@ -26,7 +30,7 @@ public class UserApiController {
      *  2. 회원 가입
      **********************************/
     @PostMapping("/api/v1/users")
-    public void signup(@RequestBody UserRequestDto requestDto){
+    public void signup(@Valid @RequestBody UserRequestDto requestDto){
         userService.signup(requestDto);
     }
 
@@ -34,7 +38,7 @@ public class UserApiController {
      *  3. 회원정보 수정
      **********************************/
     @PatchMapping("/api/v1/users/{userId}")
-    public void updateUserInfo(@PathVariable("userId") String userId, @RequestBody UserRequestDto requestDto){
+    public void updateUserInfo(@PathVariable("userId") String userId, @Valid @RequestBody UserRequestDto requestDto){
         userService.updateUserInfo(userId, requestDto);
     }
 
@@ -44,6 +48,14 @@ public class UserApiController {
     @DeleteMapping("/api/v1/users/{userId}")
     public void deleteUserInfo(@PathVariable("userId") String userId){
         userService.deleteUserInfo(userId);
+    }
+
+    /**********************************
+     *  5. 로그인
+     **********************************/
+    @PostMapping("/api/v1/users/login")
+    public ResponseEntity<Void> login(@Valid @RequestBody UserRequestDto requestDto, HttpServletResponse response){
+        return userService.login(requestDto, response);
     }
     
 }
