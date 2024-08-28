@@ -4,6 +4,8 @@ import com.hanna.first.springbootprj.service.BoardService;
 import com.hanna.first.springbootprj.web.dto.BoardRequestDto;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 public class BoardApiController {
 
@@ -22,7 +24,7 @@ public class BoardApiController {
      *  1. 게시판 등록
      **********************************/
     @PostMapping("/api/v1/boards")
-    public void saveBoard(@RequestBody BoardRequestDto requestDto){
+    public void saveBoard(@Valid @RequestBody BoardRequestDto requestDto){
         boardService.saveBoard(requestDto);
     }
 
@@ -30,7 +32,7 @@ public class BoardApiController {
      *  2. 게시판 정보 수정
      **********************************/
     @PutMapping("/api/v1/boards/{id}")
-    public void updateBoardInfo(@PathVariable Long id, @RequestBody BoardRequestDto requestDto){
+    public void updateBoardInfo(@PathVariable Long id, @Valid @RequestBody BoardRequestDto requestDto){
         boardService.updateBoardInfo(id, requestDto);
     }
 

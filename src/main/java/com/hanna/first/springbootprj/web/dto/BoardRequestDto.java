@@ -3,10 +3,17 @@ package com.hanna.first.springbootprj.web.dto;
 import com.hanna.first.springbootprj.domain.board.Board;
 import com.hanna.first.springbootprj.domain.board.BoardType;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class BoardRequestDto {
 
     private Long id;
+
+    @NotNull
     private BoardType boardTypeCode;
+
+    @NotBlank
     private String boardName;
 
     /**********************************
