@@ -2,13 +2,29 @@ package com.hanna.first.springbootprj.web.dto;
 
 import com.hanna.first.springbootprj.domain.user.User;
 import com.hanna.first.springbootprj.domain.user.UserRole;
+import com.hanna.first.springbootprj.validation.group.Create;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 public class UserRequestDto {
 
     private Long id;
+
+    @Pattern(regexp = "^[a-zA-Z0-9]{4,}$", message = "아이디는 4~10자리 영문과 숫자로 구성되어야 합니다.")
     private String userId;
+
+    @NotBlank
+    @Pattern(regexp = "^[a-zA-Z0-9~!@#$%^&*()_+=?,./<>{}\\[\\]\\-]{8,15}$", message = "비밀번호는 8~15자리 영문, 숫자, 특수문자로 구성되어야 합니다.")
     private String password;
+
+    @NotBlank(message = "사용자 이름은 필수입니다.", groups = Create.class)
+    @Size(min = 1, max = 50, message = "사용자 이름은 1자 이상 50자 이하로 입력해야 합니다.")
     private String userName;
+
+    @NotNull(groups = Create.class)
     private UserRole userRole;
 
     /**********************************

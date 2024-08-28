@@ -71,7 +71,7 @@ public class UserService {
         String encodedPassword = passwordEncoder.encode(requestDto.getPassword());
         System.out.println("서비스 비밀번호 암호화=====>" +encodedPassword);
 
-        entity.update(requestDto.getPassword(), requestDto.getUserName(), requestDto.getUserRole());
+        entity.update(encodedPassword, requestDto.getUserName(), requestDto.getUserRole());
     }
 
     /**********************************
