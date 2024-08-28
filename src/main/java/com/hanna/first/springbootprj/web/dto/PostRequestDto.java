@@ -4,14 +4,28 @@ import com.hanna.first.springbootprj.domain.board.Board;
 import com.hanna.first.springbootprj.domain.post.Post;
 import com.hanna.first.springbootprj.domain.post.PostStatus;
 import com.hanna.first.springbootprj.domain.user.User;
+import com.hanna.first.springbootprj.validation.group.Create;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class PostRequestDto {
 
     private Long id;
+
+    @NotNull
     private PostStatus postStatusCode;
+
+    @NotNull(groups = Create.class)
+    @Size(min = 1, max = 100)
     private String title;
+
     private String content;
+
+    @NotNull(groups = Create.class)
     private Long boardId;
+
+    @NotNull(groups = Create.class)
     private Long userId;
 
     /**********************************

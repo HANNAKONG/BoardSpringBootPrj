@@ -3,8 +3,11 @@ package com.hanna.first.springbootprj.web;
 import com.hanna.first.springbootprj.domain.board.BoardType;
 import com.hanna.first.springbootprj.domain.post.PostStatus;
 import com.hanna.first.springbootprj.service.PostService;
+import com.hanna.first.springbootprj.validation.group.Create;
+import com.hanna.first.springbootprj.validation.group.Update;
 import com.hanna.first.springbootprj.web.dto.PostRequestDto;
 import com.hanna.first.springbootprj.web.dto.PostResponseDto;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -48,7 +51,7 @@ public class PostApiController {
      *  3. 게시글 등록
      **********************************/
     @PostMapping("/api/v1/posts")
-    public void savePost(@RequestBody PostRequestDto requestDto){
+    public void savePost(@Validated(Create.class) @RequestBody PostRequestDto requestDto){
         postService.savePost(requestDto);
     }
 
@@ -56,7 +59,7 @@ public class PostApiController {
      *  4. 게시글 수정
      **********************************/
     @PatchMapping("/api/v1/posts/{id}")
-    public void updatePost(@PathVariable Long id, @RequestBody PostRequestDto requestDto){
+    public void updatePost(@PathVariable Long id, @Validated(Update.class) @RequestBody PostRequestDto requestDto){
         postService.updatePost(id, requestDto);
     }
 
