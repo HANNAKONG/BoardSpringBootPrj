@@ -33,7 +33,7 @@ public class UserService {
      **********************************/
     public UserResponseDto getUserInfo(final String userId){
         final User entity = userRepository.findByUserId(userId).orElseThrow(
-                () -> new IllegalArgumentException("해당 회원이 없습니다. userId"+ userId)
+                () -> new IllegalArgumentException("존재하지 않는 회원입니다. 아이디: "+ userId)
         );
 
         return new UserResponseDto(entity);
@@ -46,7 +46,7 @@ public class UserService {
     public void signup(final UserRequestDto requestDto){
         //중복여부 check
         userRepository.findByUserId(requestDto.getUserId()).ifPresent((final User user) -> {
-            throw new IllegalArgumentException("이미 가입된 회원입니다. 아이디: " + requestDto.getUserId());
+            throw new IllegalArgumentException("이미 가입한 회원입니다. 아이디: " + requestDto.getUserId());
         });
 
         //비밀번호 암호화
@@ -64,7 +64,7 @@ public class UserService {
     @Transactional
     public void updateUserInfo(final String userId, final UserRequestDto requestDto){
         final User entity = userRepository.findByUserId(userId).orElseThrow(
-                () -> new IllegalArgumentException("해당 회원이 없습니다. 아이디: "+ userId)
+                () -> new IllegalArgumentException("존재하지 않는 회원입니다. 아이디: "+ userId)
         );
 
         //비밀번호 암호화
@@ -80,7 +80,7 @@ public class UserService {
     @Transactional
     public void deleteUserInfo(final String userId){
         final User entity = userRepository.findByUserId(userId).orElseThrow(
-                () -> new IllegalArgumentException("해당 회원이 없습니다. 아이디: "+ userId)
+                () -> new IllegalArgumentException("존재하지 않는 회원입니다. 아이디: "+ userId)
         );
 
         userRepository.delete(entity);
@@ -92,7 +92,7 @@ public class UserService {
     @Transactional
     public ResponseEntity<Void> login(final UserRequestDto requestDto, HttpServletResponse response){
         final User entity = userRepository.findByUserId(requestDto.getUserId()).orElseThrow(
-                () -> new IllegalArgumentException("해당 회원이 없습니다. 아이디: "+ requestDto.getUserId())
+                () -> new IllegalArgumentException("존재하지 않는 회원입니다. 아이디: "+ requestDto.getUserId())
         );
 
         if (!passwordEncoder.matches(requestDto.getPassword(), entity.getPassword())) {
