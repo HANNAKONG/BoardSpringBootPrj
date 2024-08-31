@@ -90,7 +90,7 @@ public class UserService {
      *  5. 로그인
      **********************************/
     @Transactional
-    public ResponseEntity<Void> login(final UserRequestDto requestDto, HttpServletResponse response){
+    public String login(final UserRequestDto requestDto){
         final User entity = userRepository.findByUserId(requestDto.getUserId()).orElseThrow(
                 () -> new IllegalArgumentException("존재하지 않는 회원입니다. 아이디: "+ requestDto.getUserId())
         );
@@ -99,12 +99,9 @@ public class UserService {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
 
-        List<UserRole> userRoles = new ArrayList<>();
-        userRoles.add(entity.getUserRole());
-        String token = jwtTokenProvider.createToken(entity.getUserId(), userRoles);
-        response.setHeader("Authorization", "Bearer " + token);
+        String token = jwtTokenProvider.createToken(entity.getUserId());
 
-        return ResponseEntity.ok().build();
+        return token;
     }
 
 }
