@@ -36,9 +36,12 @@ public class JwtTokenProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String createToken(String userId, List<UserRole> roles){ //다중 역할 지원
+    public String getSecretKey() {
+        return secretKey;
+    }
+
+    public String createToken(String userId){ //userRole 제외
         Claims claims = Jwts.claims().setSubject(userId);
-        claims.put("roles", roles);
 
         Date now = new Date();
 
@@ -49,16 +52,6 @@ public class JwtTokenProvider {
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
         return token;
-    }
-
-    public Authentication getAuthentication(String token){
-        UserDetails userDetails = customUserDetailsService.loadUserByUsername(this.getUsername(token));
-        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
-    }
-
-    public String getUsername(String token){
-        String info = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
-        return info;
     }
 
     public String resolveToken(HttpServletRequest request) {
