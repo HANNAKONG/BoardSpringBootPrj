@@ -56,8 +56,11 @@ public class UserApiController {
      *  5. 로그인
      **********************************/
     @PostMapping("/api/v1/users/login")
-    public ResponseEntity<Void> login(@Validated @RequestBody UserRequestDto requestDto, HttpServletResponse response){
-        return userService.login(requestDto, response);
+    public ResponseEntity<Void> login(@Validated @RequestBody UserRequestDto requestDto){
+        String token = userService.login(requestDto);
+        return ResponseEntity.ok()
+                .header("Authorization", "Bearer " + token)
+                .build();
     }
     
 }
